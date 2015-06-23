@@ -168,8 +168,9 @@ class ModuleManager
     public function getInstalls(array $currentComposerInstalledPackages)
     {
         $repo = $this->installedPackageRepository;
-        $packages = array_filter($currentComposerInstalledPackages, function(PackageInterface $package) use ($repo) {
-            return !$repo->has($package->getName(), $this->createVersion($package));
+        $that = $this;
+        $packages = array_filter($currentComposerInstalledPackages, function(PackageInterface $package) use ($repo, $that) {
+            return !$repo->has($package->getName(), $that->createVersion($package));
         });
 
         $config = $this->config;
